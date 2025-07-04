@@ -4,15 +4,20 @@ pipeline {
     gradle 'GRADLE_8' // Name you gave in Global Tool Configuration
   }
   stages {
-        stage('Build') {
+    stage('Checkout') {
           steps {
-            sh './gradlew clean build'
+            git 'https://github.com/rameshwar-gundewad/jwt-security-demo.git'
           }
         }
-  }
-  post {
-      always {
-        sh 'nohup ./gradlew bootRun &'
-      }
+        stage('Build') {
+              steps {
+                bat 'gradlew.bat clean build'
+              }
+            }
+            stage('Run App') {
+              steps {
+                bat 'start /B gradlew.bat bootRun'
+              }
+            }
   }
 }

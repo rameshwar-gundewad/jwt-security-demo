@@ -9,22 +9,31 @@ pipeline {
             git 'https://github.com/rameshwar-gundewad/jwt-security-demo.git'
           }
         }
-         stage('Build') {
-              steps {
-                echo 'Building...'
-                bat 'gradlew.bat clean build' // Use 'sh' for Linux
-              }
-            }
-        stage('Test') {
-              steps {
-                echo 'Testing...'
-                bat 'gradlew.bat test'
-              }
-        }
-        stage('Run App') {
-          steps {
-          bat 'start /B gradlew.bat bootRun > bootrun.log 2>&1'
-        }
+    stage('Build') {
+       steps {
+         echo 'Building...'
+         bat 'gradlew clean build' // Use 'sh' for Linux
+       }
     }
+    stage('Test') {
+      steps {
+        echo 'Testing...'
+        bat 'gradlew.bat test'
+      }
+    }
+    stage('Run App') {
+      steps {
+      echo 'Deploying...'
+        bat 'start /B java -jar build\\libs\\jwt-security-demo-0.0.1-SNAPSHOT'
+      }
+    }
+  }
+  post {
+      success {
+        echo 'Pipeline completed successfully.'
+      }
+      failure {
+        echo 'Pipeline failed.'
+      }
   }
 }

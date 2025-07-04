@@ -11,7 +11,7 @@ pipeline {
     }
     stage('Checkout') {
           steps {
-            git 'https://github.com/rameshwar-gundewad/jwt-security-demo.git'
+            git branch: 'master',git 'https://github.com/rameshwar-gundewad/jwt-security-demo.git'
           }
         }
     stage('Build') {
@@ -20,28 +20,39 @@ pipeline {
          bat 'gradlew.bat clean build' // Use 'sh' for Linux
        }
     }
-    stage('Run App') {
-      steps {
-         echo '🚀 Deploying Spring Boot application...'
-         bat 'start /B java -jar build\\libs\\jwt-security-demo-0.0.1-SNAPSHOT.jar --server.port=8083 > app.log 2>&1'
-         echo '✅ Deployment command issued. Check app.log for runtime output.'
-      }
-    }
-    stage('Check for app.log') {
+    stage('Test') {
           steps {
+            echo '🧪 Running tests...'
+            bat 'gradlew.bat test'
+          }
+    }
+    stage('Package') {
+          steps {
+            echo '📦 Packaging the application...'
+            bat 'gradlew.bat bootJar'
+          }
+    }
+    stage('Deploy') {
+          steps {
+            echo '🚀 Deploying the application...'
             bat '''
-              cd jwt-security-demo
-              dir /s /b app.log
+              taskkill /F /IM java.exe > nul 2>&1
+              timeout /t 3 > nul
+              start /B java -jar build\\libs\\jwt-security-demo-0.0.1-SNAPSHOT.jar --server.port=8083 > app.log 2>&1
             '''
           }
-        }
-    stage('Print Deployment Log') {
+    }
+    stage('Show Logs') {
           steps {
-            script {
-              echo '📄 Reading app.log content...'
-              def log = bat(script: 'type app.log', returnStdout: true).trim()
-              echo "📝 app.log contents:\n${log}"
-            }
+            echo '📄 Displaying app.log...'
+            bat '''
+              timeout /t 5 > nul
+              if exist app.log (
+                type app.log
+              ) else (
+                echo app.log not found
+              )
+            '''
           }
     }
   }

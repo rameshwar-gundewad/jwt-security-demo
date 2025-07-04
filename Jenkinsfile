@@ -4,6 +4,11 @@ pipeline {
     gradle 'jenkins-gradle-8' // Name you gave in Global Tool Configuration
   }
   stages {
+   stage('Show Environment Variables') {
+        steps {
+          bat 'set'
+        }
+    }
     stage('Checkout') {
           steps {
             git 'https://github.com/rameshwar-gundewad/jwt-security-demo.git'

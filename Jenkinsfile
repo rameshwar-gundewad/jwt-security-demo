@@ -2,6 +2,7 @@ pipeline {
   agent any
   tools {
     gradle 'jenkins-gradle-8' // Name you gave in Global Tool Configuration
+    jdk 'JDK_17'
   }
   stages {
    stage('Show Environment Variables') {

@@ -20,12 +20,6 @@ pipeline {
          bat 'gradlew.bat clean build' // Use 'sh' for Linux
        }
     }
-    stage('Test') {
-      steps {
-        echo 'Testing...'
-        bat 'gradlew.bat test'
-      }
-    }
     stage('Run App') {
       steps {
          echo '🚀 Deploying Spring Boot application...'

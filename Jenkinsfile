@@ -33,6 +33,14 @@ pipeline {
          echo '✅ Deployment command issued. Check app.log for runtime output.'
       }
     }
+    stage('Check for app.log') {
+          steps {
+            bat '''
+              cd jwt-security-demo
+              dir /s /b app.log
+            '''
+          }
+        }
     stage('Print Deployment Log') {
           steps {
             script {

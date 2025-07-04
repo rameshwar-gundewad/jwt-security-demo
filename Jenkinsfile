@@ -28,9 +28,16 @@ pipeline {
     }
     stage('Run App') {
       steps {
-        echo 'Deploying...'
-        bat 'start /B java -jar build\\libs\\jwt-security-demo-0.0.1-SNAPSHOT.jar > app.log 2>&1'
+         echo '🚀 Deploying Spring Boot application...'
+         bat 'start /B java -jar build\\libs\\jwt-security-demo-0.0.1-SNAPSHOT.jar > app.log 2>&1'
+         echo '✅ Deployment command issued. Check app.log for runtime output.'
       }
+    }
+    stage('Print Logs') {
+          steps {
+            echo '📄 Showing deployment logs from app.log...'
+            bat 'type app.log'
+          }
     }
   }
   post {

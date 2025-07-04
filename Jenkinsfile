@@ -23,8 +23,8 @@ pipeline {
     }
     stage('Run App') {
       steps {
-      echo 'Deploying...'
-        bat 'start /B java -jar build\\libs\\jwt-security-demo-0.0.1-SNAPSHOT.jar'
+        echo 'Deploying...'
+        bat 'start /B java -jar build\\libs\\jwt-security-demo-0.0.1-SNAPSHOT.jar > app.log 2>&1'
       }
     }
   }

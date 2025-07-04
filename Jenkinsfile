@@ -33,8 +33,7 @@ pipeline {
          echo '✅ Deployment command issued. Check app.log for runtime output.'
       }
     }
-    stages {
-        stage('Print Deployment Log') {
+    stage('Print Deployment Log') {
           steps {
             script {
               echo '📄 Reading app.log content...'
@@ -42,8 +41,7 @@ pipeline {
               echo "📝 app.log contents:\n${log}"
             }
           }
-        }
-      }
+    }
   }
   post {
       success {

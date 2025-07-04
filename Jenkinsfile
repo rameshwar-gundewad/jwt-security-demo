@@ -4,15 +4,13 @@ pipeline {
     gradle 'jenkins-gradle-8' // Name you gave in Global Tool Configuration
     jdk 'JDK_17'
   }
-  stages {
-   stage('Show Environment Variables') {
-        steps {
-          bat 'set'
-        }
+  parameters {
+      string(name: 'GIT_BRANCH', defaultValue: 'main', description: 'Git branch to build')
     }
+  stages {
     stage('Checkout') {
           steps {
-            git branch: 'master',url 'https://github.com/rameshwar-gundewad/jwt-security-demo.git'
+            git branch: "${params.GIT_BRANCH}", url: 'https://github.com/rameshwar-gundewad/jwt-security-demo.git'
           }
     }
     stage('Build') {

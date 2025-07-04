@@ -12,8 +12,7 @@ pipeline {
     }
     stage('Checkout') {
           steps {
-            git branch: 'master'
-            git 'https://github.com/rameshwar-gundewad/jwt-security-demo.git'
+            git branch: 'master',url 'https://github.com/rameshwar-gundewad/jwt-security-demo.git'
           }
     }
     stage('Build') {

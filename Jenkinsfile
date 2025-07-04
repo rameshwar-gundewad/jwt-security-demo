@@ -8,6 +8,11 @@ pipeline {
       string(name: 'GIT_BRANCH', defaultValue: 'main', description: 'Git branch to build')
     }
   stages {
+   stage('Show Environment Variables') {
+        steps {
+          bat 'set'
+        }
+    }
     stage('Checkout') {
           steps {
             git branch: "${params.GIT_BRANCH}", url: 'https://github.com/rameshwar-gundewad/jwt-security-demo.git'

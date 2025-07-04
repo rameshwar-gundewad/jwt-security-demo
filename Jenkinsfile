@@ -33,12 +33,17 @@ pipeline {
          echo '✅ Deployment command issued. Check app.log for runtime output.'
       }
     }
-    stage('Print Logs') {
+    stages {
+        stage('Print Deployment Log') {
           steps {
-            echo '📄 Showing deployment logs from app.log...'
-            bat 'type app.log'
+            script {
+              echo '📄 Reading app.log content...'
+              def log = bat(script: 'type app.log', returnStdout: true).trim()
+              echo "📝 app.log contents:\n${log}"
+            }
           }
-    }
+        }
+      }
   }
   post {
       success {

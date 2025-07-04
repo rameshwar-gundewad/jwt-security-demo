@@ -12,7 +12,7 @@ pipeline {
     stage('Build') {
        steps {
          echo 'Building...'
-         bat 'gradlew clean build' // Use 'sh' for Linux
+         bat 'gradlew.bat clean build' // Use 'sh' for Linux
        }
     }
     stage('Test') {

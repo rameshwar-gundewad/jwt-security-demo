@@ -21,51 +21,32 @@ pipeline {
     stage('Build') {
        steps {
          echo 'Building...'
-         bat 'gradlew.bat clean build' // Use 'sh' for Linux
+         bat 'gradlew.bat clean build -x test' // Use 'sh' for Linux
        }
     }
     stage('Test') {
           steps {
-            echo '🧪 Running tests...'
+            echo 'Running tests...'
             bat 'gradlew.bat test'
-          }
-    }
-    stage('Package') {
-          steps {
-            echo '📦 Packaging the application...'
-            bat 'gradlew.bat bootJar'
           }
     }
     stage('Deploy') {
           steps {
-            echo '🚀 Deploying the application...'
+            echo 'Deploying the application...'
             bat '''
               taskkill /F /IM java.exe > nul 2>&1
               timeout /t 3 > nul
-              start /B java -jar build\\libs\\jwt-security-demo-0.0.1-SNAPSHOT.jar --server.port=8083 > app.log 2>&1
-            '''
-          }
-    }
-    stage('Show Logs') {
-          steps {
-            echo '📄 Displaying app.log...'
-            bat '''
-              timeout /t 5 > nul
-              if exist app.log (
-                type app.log
-              ) else (
-                echo app.log not found
-              )
+              start /B java -jar build\\libs\\jwt-security-demo-0.0.1-SNAPSHOT.jar > app.log 2>&1
             '''
           }
     }
   }
   post {
       success {
-        echo '✅ Pipeline completed successfully.'
+        echo 'Pipeline completed successfully.'
       }
       failure {
-        echo '❌ Pipeline failed. Check logs for details.'
+        echo 'Pipeline failed. Check logs for details.'
       }
     }
 }

@@ -10,6 +10,7 @@ public class EmployeeController {
 
     @GetMapping
     public String getAllEmployee(){
+        System.out.println("Getting all employee list!!");
         return "Successfully got all employee list!!";
     }
 }

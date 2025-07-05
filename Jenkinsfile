@@ -34,6 +34,7 @@ pipeline {
           steps {
             echo 'Deploying the application...'
             bat 'start /B java -jar build\\libs\\jwt-security-demo-0.0.1-SNAPSHOT.jar > app.log 2>&1'
+            bat 'type app.log'
           }
     }
   }

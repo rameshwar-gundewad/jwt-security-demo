@@ -33,11 +33,7 @@ pipeline {
     stage('Deploy') {
           steps {
             echo 'Deploying the application...'
-            bat '''
-              taskkill /F /IM java.exe > nul 2>&1
-              timeout /t 3 > nul
-              start /B java -jar build\\libs\\jwt-security-demo-0.0.1-SNAPSHOT.jar > app.log 2>&1
-            '''
+            bat 'start /B java -jar build\\libs\\jwt-security-demo-0.0.1-SNAPSHOT.jar > app.log 2>&1'
           }
     }
   }

@@ -5,7 +5,7 @@ pipeline {
     jdk 'JDK_17'
   }
   parameters {
-      string(name: 'GIT_BRANCH', defaultValue: 'main', description: 'Git branch to build')
+      string(name: 'GIT_BRANCH', defaultValue: 'master', description: 'Git branch to build')
     }
   stages {
    stage('Show Environment Variables') {
